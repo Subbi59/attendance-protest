@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>#AttendanceIsNotLearning  </title>
+<style>
+  * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+  body {
+    background:linear-gradient(135deg,#000000,#190000);
+    color:#fff;
+    overflow-x:hidden;
+    position:relative;
+    height:100vh;
+  }
+  canvas#particles {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+  }
+  header {text-align:center;padding:70px 20px;}
+  header h1 {
+    font-size:3em;
+    color:#ff3131;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    text-shadow:0 0 20px #ff3131,0 0 40px #ff5c5c;
+    position:relative;
+  }
+  header h1::after {
+    content:"#AttendanceIsNotLearning";
+    display:block;
+    font-size:0.5em;
+    color:#ff5c5c;
+    letter-spacing:4px;
+    margin-top:10px;
+    animation:fadeIn 3s ease-in-out infinite alternate;
+  }
+  @keyframes fadeIn {
+    from {opacity:0.4;}
+    to {opacity:1;}
+  }
+  header p {margin-top:10px;color:#ccc;font-size:1.1em;}
+  section {padding:50px 20px;max-width:900px;margin:auto;}
+  .manifesto h2 {font-size:1.8em;color:#ff3131;margin-bottom:10px;}
+  .manifesto p {line-height:1.7;color:#ddd;font-size:1em;}
+  .comparison {
+    display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:40px;
+  }
+  .box {
+    flex:1 1 200px;
+    background:rgba(17,17,17,0.85);
+    border:2px solid #ff3131;
+    border-radius:10px;
+    padding:25px;
+    text-align:center;
+    transition:0.3s;
+    backdrop-filter:blur(5px);
+  }
+  .box:hover {transform:translateY(-6px);background:rgba(26,0,0,0.9);}
+  .box h3 {font-size:1.8em;color:#ff5c5c;}
+  .box p {margin-top:8px;color:#bbb;}
+  .cta {
+    text-align:center;margin-top:70px;
+  }
+  .cta h2 {color:#ff3131;margin-bottom:10px;}
+  .cta p {color:#ccc;margin-bottom:25px;}
+  .cta a {
+    text-decoration:none;
+  }
+  .cta button {
+    background:#ff3131;
+    color:#fff;
+    border:none;
+    padding:16px 35px;
+    font-size:1.1em;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.3s;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% {box-shadow:0 0 0 0 rgba(255,49,49,0.6);}
+    70% {box-shadow:0 0 0 15px rgba(255,49,49,0);}
+    100% {box-shadow:0 0 0 0 rgba(255,49,49,0);}
+  }
+  .cta button:hover {
+    background:#ff5c5c;
+    transform:scale(1.05);
+  }
+  footer {text-align:center;padding:30px 20px;color:#999;font-size:0.9em;}
+  @media(max-width:600px){
+    header h1{font-size:2em;}
+    .manifesto p{font-size:0.95em;}
+    .cta button{width:80%;font-size:1em;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<header>
+  <h1>| THE STUDENTS VOICE |</h1>
+  <p>When learning turns into punishment, education loses its purpose.</p>
+</header>
+
+<section class="manifesto">
+  <h2>The Problem</h2>
+  <p>
+    Many colleges impose an unfair attendance system that rewards 1% for attending
+    but deducts 3% for missing a class. This isn’t discipline—it’s demoralization.
+    Students deserve a fair, transparent evaluation system that values learning,
+    not forced presence.
+  </p>
+</section>
+
+<section class="comparison">
+  <div class="box">
+    <h3>+1%</h3>
+    <p>For showing up. Bare minimum credit.</p>
+  </div>
+  <div class="box">
+    <h3>-3%</h3>
+    <p>For missing one class. Triple the penalty. Totally rational, right?</p>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Take a Stand</h2>
+  <p>Download the letter, sign it, and share this page. Because showing up shouldn’t be survival.</p>
+  <a href="attendance_protest_letter.docx" download>
+    <button>⬇ Download Protest Letter</button>
+  </a>
+</section>
+
+<footer>
+  <p>Built by students who believe education deserves better. © 2025</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for(let i=0; i<100; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 3 + 1,
+    speedX: (Math.random() - 0.5) * 1,
+    speedY: (Math.random() - 0.5) * 1,
+  });
+}
+
+function animateParticles(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for(let i=0; i<particles.length; i++){
+    let p = particles[i];
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255,49,49,0.7)";
+    ctx.fill();
+    p.x += p.speedX;
+    p.y += p.speedY;
+    if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+</script>
+
+</body>
+</html>
